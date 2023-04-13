@@ -1,34 +1,37 @@
 //letter
-#define ID  100;
+#define ID  1;
 
 //several brackets
-#define OCB 1;
-#define CCB 2;
-#define OSB 3;
-#define CSB 4;
-#define OB  5;
-#define CB  6;
+#define OCB 2;
+#define CCB 3;
+#define OSB 4;
+#define CSB 5;
+#define OB  6;
+#define CB  7;
 
 //pipe separator
-#define SEP 7;
+#define SEP 8;
 
 //eq
-#define EQ  8;
+#define EQ  9;
 
-//optionID
-#define OID 9; //later
+//optionString
+#define OSTR 10; //later
 
 //separators
 // \n \t " "
 // IGNORED
 
 // ;
-#define SC 10;
+#define SC 11;
 
 //multipliers
 // *
-#define Q   11;
+#define Q   12;
+#define NUM 13;
 
+//block sep "|" but in {} context
+#define BLSEP 14;
 
 // - examples
 //

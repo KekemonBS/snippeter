@@ -1,13 +1,20 @@
-#include <regex.h>
+//#include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
+//#include <errno.h>
 #include <string.h>
-#include <unistd.h>
+//#include <unistd.h>
+//#include "tokens.h"
 
 #pragma pack(1)
 
-//----------------------------------
+//some external functions in lex.yy.c
+extern int yylex();
+extern int yylineno;
+extern char* yytext;
+extern FILE* yyin;
+
+//---------------------------------
 //          args handling
 //----------------------------------
 typedef struct {
@@ -95,60 +102,6 @@ int sliceDestruct(slice* s) {
 }
 //----------------------------------
 
-//##########################################
-
-//----------------------------------
-//              tree  
-//----------------------------------
-
-#define MAX_CHILD_COUNT 20000
-typedef struct {
-    char* desc;
-    struct tree* leaf[MAX_CHILD_COUNT];
-} tree;
-//tree root that will be expanded by parsing
-tree root;
-//----------------------------------
-
-//----------------------------------
-//              tokens  
-//----------------------------------
-
-//array of tokens
-#define MAX_TOKEN_COUNT 200000
-char* tokenList[MAX_TOKEN_COUNT];
-
-//----------------------------------
-
-//this defines can be eradiacated if i apply same 
-//slice as i did to collect data from stdin
-
-//##########################################
-
-    
-void 
-tokenize(char **tokenList, char *text)
-{
-    //use lex lexer
-    char charArray [strlen(text)];
-    void* result = memcpy(charArray, text, strlen(text));
-    if (result == NULL) {
-        perror("memcpy");
-        exit(EXIT_FAILURE);
-    }
-
-    printf("[%s]\n", text);
-    for (int i = 0; i < sizeof(charArray); ++i) {
-        printf("%d ---- %c\n", i, charArray[i]);
-    }
-}
-
-void
-parse()
-{
- //use yacc paser   
-}
-
 int 
 main(int argc, char *argv[])
 {
@@ -161,7 +114,7 @@ main(int argc, char *argv[])
     int(*fp)(void *, char);
     fp = s.si.append;
     
-    printf("%p\n", s.si.append);
+    //printf("%p\n", s.si.append);
 
     char c;
     while ((c = fgetc(stdin)) != EOF) {
@@ -172,11 +125,16 @@ main(int argc, char *argv[])
         }
     }
     printf("%s\n",  s.data); 
-    printf("%p\n", s.si.append);
+    //printf("%p\n", s.si.append);
 
-    tokenize(tokenList, s.data); 
     //(*((*(s.si)).append))(&s, c);
-
+    
+    yyin = fmemopen(s.data, strlen(s.data), "r");
+    int token = yylex();
+    while(token) {
+        printf("%d --- %d\n", yylineno, token);
+        token = yylex();
+    }
     //parse
    
     if (!sliceDestruct(&s)) {
