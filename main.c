@@ -9,10 +9,14 @@
 #pragma pack(1)
 
 //some external functions in lex.yy.c
-extern int yylex();
+extern int yylex(void);
 extern int yylineno;
 extern char* yytext;
 extern FILE* yyin;
+
+//some external functions in y.tab.c
+extern int yyparse(void);
+extern int yychar; 
 
 //---------------------------------
 //          args handling
@@ -129,14 +133,22 @@ main(int argc, char *argv[])
 
     //(*((*(s.si)).append))(&s, c);
     
+    //lex
     yyin = fmemopen(s.data, strlen(s.data), "r");
-    int token = yylex();
+     int token = yylex();
     while(token) {
         printf("%d --- %d\n", yylineno, token);
         token = yylex();
     }
+
+    printf("\n");
+
     //parse
-   
+    yyin = fmemopen(s.data, strlen(s.data), "r");
+    if(yyparse()) {
+        printf("---> %d\n", yychar);
+    }
+
     if (!sliceDestruct(&s)) {
         perror("unable to deallocate slice\n");
         exit(EXIT_FAILURE);

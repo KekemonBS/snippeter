@@ -1,6 +1,11 @@
 %{
 #include <stdio.h>   //mainly printing
-#include "tokens.h"
+
+//#include "tokens.h" 
+//used to test lexer separately i need to include i
+//yacc generated header to use its tokens
+
+#include "y.tab.h"
 %}
 
 /*%option noyywrap*/

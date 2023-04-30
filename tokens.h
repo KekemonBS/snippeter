@@ -35,8 +35,8 @@
 
 // - examples
 //
-// - issffff;              //identifiers
-// - i;s*2;f*10;           //multipliers
-// - i[val1|val2|val3];ss; //parameters
-// - f[val1|val2|val3]*3;  //complex repetitions
-// - f{sss};               //nesting
+// - i;s;s;f;f;f;f;         //identifiers
+// - i;s*2;f*10;            //multipliers
+// - i[val1|val2|val3];s;s; //parameters
+// - f[val1|val2|val3]*3;   //complex repetitions
+// - f{s;s;s;};             //nesting

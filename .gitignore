@@ -1,0 +1,5 @@
+.ccls-cache/
+*.yy.c
+*.tab.c
+*~
+*.log
